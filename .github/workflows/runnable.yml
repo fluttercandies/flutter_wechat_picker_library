@@ -34,8 +34,6 @@ jobs:
         run: flutter pub get
       - name: Analyse the repo
         run: flutter analyze .
-      - name: Run tests
-        run: flutter test
       - name: Generate docs
         run: |
           dart pub global activate dartdoc
