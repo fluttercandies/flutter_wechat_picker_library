@@ -21,9 +21,9 @@ and
 The package only guarantees to be working on **the stable version of Flutter**.
 We won't update it in real-time to align with other channels of Flutter.
 
-| Versions | 3.16 |
-|--------|::|
-| 1.0.0+ | ✅ |
+|        | 3.16 |
+|--------|------|
+| 1.0.0+ | ✅    |
 
 If you got a `resolve conflict` error when running `flutter pub get`,
 please use `dependency_overrides` to fix it.
