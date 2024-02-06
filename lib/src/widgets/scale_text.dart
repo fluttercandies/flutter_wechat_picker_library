@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 final class ScaleText extends StatelessWidget {
   const ScaleText(
-    this.text, {
+    String this.text, {
     super.key,
     this.style,
     this.strutStyle,
@@ -18,9 +18,26 @@ final class ScaleText extends StatelessWidget {
     this.softWrap,
     this.minScaleFactor = 0.7,
     this.maxScaleFactor = 1.3,
-  });
+  }) : textSpans = null;
 
-  final String text;
+  const ScaleText.rich(
+    List<TextSpan> this.textSpans, {
+    super.key,
+    this.style,
+    this.strutStyle,
+    this.maxLines,
+    this.overflow,
+    this.textAlign,
+    this.textDirection,
+    this.semanticsLabel,
+    this.softWrap,
+    this.minScaleFactor = 0.7,
+    this.maxScaleFactor = 1.3,
+  }) : text = null;
+
+  final String? text;
+  final List<TextSpan>? textSpans;
+
   final TextStyle? style;
   final StrutStyle? strutStyle;
   final int? maxLines;
@@ -42,8 +59,8 @@ final class ScaleText extends StatelessWidget {
     );
     return MediaQuery(
       data: mqd.copyWith(textScaler: effectiveScaler),
-      child: Text(
-        text,
+      child: Text.rich(
+        TextSpan(text: text, children: textSpans),
         style: style,
         strutStyle: strutStyle,
         maxLines: maxLines,
