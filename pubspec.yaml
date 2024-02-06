@@ -1,6 +1,6 @@
 name: wechat_picker_library
 description: "A foundation library for wechat_*_picker."
-version: 1.0.0-dev.1
+version: 1.0.0-dev.2
 topics:
   - picker
   - wechat
