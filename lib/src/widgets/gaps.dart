@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 
+/// Add horizontal and vertical spaces.
 final class Gap extends StatelessWidget {
   const Gap.h(
     double width, {
@@ -35,6 +36,7 @@ final class Gap extends StatelessWidget {
   }
 }
 
+/// Wraps [Gap] as a sliver.
 class SliverGap extends StatelessWidget {
   const SliverGap.h(
     double width, {

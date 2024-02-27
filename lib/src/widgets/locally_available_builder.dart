@@ -9,7 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:wechat_picker_library/wechat_picker_library.dart';
 
-class LocallyAvailableBuilder extends StatefulWidget {
+/// An asset builder that builds according to the locally available state.
+final class LocallyAvailableBuilder extends StatefulWidget {
   const LocallyAvailableBuilder({
     super.key,
     required this.asset,

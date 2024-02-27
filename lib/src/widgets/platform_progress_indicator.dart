@@ -26,9 +26,9 @@ final class PlatformProgressIndicator extends StatelessWidget {
   final Brightness? brightness;
 
   bool get isAppleOS => switch (defaultTargetPlatform) {
-    TargetPlatform.iOS || TargetPlatform.macOS => true,
-    _ => false,
-  };
+        TargetPlatform.iOS || TargetPlatform.macOS => true,
+        _ => false,
+      };
 
   @override
   Widget build(BuildContext context) {

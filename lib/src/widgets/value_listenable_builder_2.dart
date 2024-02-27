@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 
+/// Bind double [ValueNotifier] into the builder.
 class ValueListenableBuilder2<A, B> extends StatelessWidget {
   const ValueListenableBuilder2({
     super.key,

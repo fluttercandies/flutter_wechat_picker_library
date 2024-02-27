@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 /// Default theme color from WeChat.
 const Color defaultThemeColorWeChat = Color(0xff00bc56);
 
+/// Rounded border radius.
 const BorderRadius maxBorderRadius = BorderRadius.all(Radius.circular(9999999));
 
 /// {@template wechat_picker_library.themeData}

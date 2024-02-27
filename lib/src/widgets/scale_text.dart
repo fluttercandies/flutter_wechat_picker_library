@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 
+/// Auto-scaling text between [minScaleFactor] and [maxScaleFactor].
 final class ScaleText extends StatelessWidget {
   const ScaleText(
     String this.text, {

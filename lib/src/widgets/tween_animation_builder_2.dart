@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 
+/// Bind double [Tween] into animation the builder.
 final class TweenAnimationBuilder2<A, B> extends StatelessWidget {
   const TweenAnimationBuilder2({
     super.key,

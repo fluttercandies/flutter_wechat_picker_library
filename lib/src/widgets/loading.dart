@@ -6,6 +6,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+/// A loading indicator in WeChat style.
 final class LoadingIndicator extends StatefulWidget {
   const LoadingIndicator({super.key, required this.tip});
 

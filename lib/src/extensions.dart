@@ -7,38 +7,53 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 extension BuildContextExtension on BuildContext {
+  /// [Theme.of].
   ThemeData get theme => Theme.of(this);
 
+  /// [IconTheme.of].
   IconThemeData get iconTheme => IconTheme.of(this);
 
+  /// [ThemeData.textTheme].
   TextTheme get textTheme => Theme.of(this).textTheme;
 
+  /// [MediaQueryData.padding].top
   double get topPadding => MediaQuery.paddingOf(this).top;
 
+  /// [MediaQueryData.padding].bottom
   double get bottomPadding => MediaQuery.paddingOf(this).bottom;
 
+  /// [MediaQueryData.viewInsets].bottom
   double get bottomInsets => MediaQuery.viewInsetsOf(this).bottom;
 }
 
 extension BrightnessExtension on Brightness {
+  /// [Brightness.dark].
   bool get isDark => this == Brightness.dark;
 
+  /// [Brightness.light].
   bool get isLight => this == Brightness.light;
 
+  /// Get the reversed [Brightness].
   Brightness get reverse =>
       this == Brightness.light ? Brightness.dark : Brightness.light;
 }
 
 extension ColorExtension on Color {
-  bool get isTransparent => this == Colors.transparent || alpha == 0x00;
+  /// Determine the transparent color by 0 alpha.
+  bool get isTransparent => alpha == 0x00;
 }
 
 extension ThemeDataExtension on ThemeData {
+  /// The effective brightness from the
+  /// [SystemUiOverlayStyle.statusBarBrightness]
+  /// and [ThemeData.brightness].
   Brightness get effectiveBrightness =>
       appBarTheme.systemOverlayStyle?.statusBarBrightness ?? brightness;
 }
 
 extension SafeSetStateExtension on State {
+  /// [setState] after the [fn] is done while the [State] is still [mounted]
+  /// and [State.context] is safe to mark needs build.
   FutureOr<void> safeSetState(FutureOr<dynamic> Function() fn) async {
     await fn();
     if (mounted &&
