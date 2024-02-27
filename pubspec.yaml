@@ -1,6 +1,6 @@
 name: wechat_picker_library
 description: "A foundation library for wechat_*_picker."
-version: 1.0.0-dev.2
+version: 1.0.0
 topics:
   - picker
   - wechat
@@ -16,7 +16,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  photo_manager: ^3.0.0-0
+  photo_manager: ^3.0.0
 
 dev_dependencies:
   flutter_lints: any
