@@ -14,13 +14,19 @@ final class LocallyAvailableBuilder extends StatefulWidget {
   const LocallyAvailableBuilder({
     super.key,
     required this.asset,
-    required this.builder,
     this.isOriginal = true,
+    required this.builder,
+    this.progressBuilder,
   });
 
   final AssetEntity asset;
-  final Widget Function(BuildContext context, AssetEntity asset) builder;
   final bool isOriginal;
+  final Widget Function(BuildContext context, AssetEntity asset) builder;
+  final Widget Function(
+    BuildContext context,
+    PMRequestState? state,
+    double? progress,
+  )? progressBuilder;
 
   @override
   State<LocallyAvailableBuilder> createState() =>
@@ -86,36 +92,35 @@ class _LocallyAvailableBuilderState extends State<LocallyAvailableBuilder> {
     });
   }
 
-  Widget _indicator(BuildContext context) {
+  Widget _buildIndicator(BuildContext context) {
     return StreamBuilder<PMProgressState>(
-      stream: _progressHandler!.stream,
+      stream: _progressHandler?.stream,
       initialData: const PMProgressState(0, PMRequestState.prepare),
       builder: (BuildContext c, AsyncSnapshot<PMProgressState> s) {
-        if (s.hasData) {
-          final double progress = s.data!.progress;
-          final PMRequestState state = s.data!.state;
-          return Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Icon(
-                state == PMRequestState.failed
-                    ? Icons.cloud_off
-                    : Icons.cloud_queue,
-                color: context.iconTheme.color?.withOpacity(.4),
-                size: 28,
-              ),
-              if (state != PMRequestState.success &&
-                  state != PMRequestState.failed)
-                ScaleText(
-                  '  iCloud ${(progress * 100).toInt()}%',
-                  style: TextStyle(
-                    color: context.textTheme.bodyMedium?.color?.withOpacity(.4),
-                  ),
-                ),
-            ],
-          );
+        final PMRequestState? state = s.data?.state;
+        final double? progress = s.data?.progress;
+        if (widget.progressBuilder case final builder?) {
+          return builder(context, state, progress);
         }
-        return const SizedBox.shrink();
+        return Row(
+          children: [
+            Icon(
+              state == PMRequestState.failed
+                  ? Icons.cloud_off
+                  : Icons.cloud_queue,
+              color: context.iconTheme.color?.withOpacity(.4),
+              size: 28,
+            ),
+            if (state != PMRequestState.success &&
+                state != PMRequestState.failed)
+              ScaleText(
+                '  iCloud ${((progress ?? 0) * 100).toInt()}%',
+                style: TextStyle(
+                  color: context.textTheme.bodyMedium?.color?.withOpacity(.4),
+                ),
+              ),
+          ],
+        );
       },
     );
   }
@@ -125,9 +130,6 @@ class _LocallyAvailableBuilderState extends State<LocallyAvailableBuilder> {
     if (_isLocallyAvailable) {
       return widget.builder(context, widget.asset);
     }
-    if (_progressHandler != null) {
-      return Center(child: _indicator(context));
-    }
-    return const SizedBox.shrink();
+    return Center(child: FittedBox(child: _buildIndicator(context)));
   }
 }
