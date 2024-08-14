@@ -54,13 +54,25 @@ class _LocallyAvailableBuilderState extends State<LocallyAvailableBuilder> {
     }
   }
 
+  void _markAndPresentError(Object exception, StackTrace stack) {
+    _hasError = true;
+    safeSetState(() {});
+    FlutterError.presentError(
+      FlutterErrorDetails(
+        exception: exception,
+        stack: stack,
+        library: 'LocallyAvailableBuilder(${widget.asset.id})',
+      ),
+    );
+  }
+
   Future<void> _checkLocallyAvailable() async {
     try {
       _isLocallyAvailable = await widget.asset.isLocallyAvailable(
         isOrigin: widget.isOriginal,
       );
-    } catch (e) {
-      _hasError = true;
+    } catch (e, s) {
+      _markAndPresentError(e, s);
       rethrow;
     } finally {
       safeSetState(() {});
@@ -83,7 +95,7 @@ class _LocallyAvailableBuilderState extends State<LocallyAvailableBuilder> {
         _isLocallyAvailable = true;
       }
     }).catchError((e, s) {
-      _hasError = true;
+      _markAndPresentError(e, s);
     }).whenComplete(() {
       safeSetState(() {});
     });
