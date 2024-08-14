@@ -3,7 +3,6 @@
 // in the LICENSE file.
 
 import 'dart:developer' as dev;
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:photo_manager/photo_manager.dart';
@@ -34,6 +33,7 @@ final class LocallyAvailableBuilder extends StatefulWidget {
 }
 
 class _LocallyAvailableBuilderState extends State<LocallyAvailableBuilder> {
+  bool _hasError = false;
   bool _isLocallyAvailable = false;
   PMProgressHandler? _progressHandler;
 
@@ -55,41 +55,58 @@ class _LocallyAvailableBuilderState extends State<LocallyAvailableBuilder> {
   }
 
   Future<void> _checkLocallyAvailable() async {
-    _isLocallyAvailable = await widget.asset.isLocallyAvailable(
-      isOrigin: widget.isOriginal,
-    );
-    if (!mounted) {
+    try {
+      _isLocallyAvailable = await widget.asset.isLocallyAvailable(
+        isOrigin: widget.isOriginal,
+      );
+    } catch (e) {
+      _hasError = true;
+      rethrow;
+    } finally {
+      safeSetState(() {});
+    }
+    if (!mounted || _isLocallyAvailable) {
       return;
     }
-    setState(() {});
-    if (!_isLocallyAvailable) {
-      _progressHandler = PMProgressHandler();
-      Future<void>(() async {
-        final File? file = await widget.asset.loadFile(
-          isOrigin: widget.isOriginal,
-          withSubtype: true,
-          progressHandler: _progressHandler,
-        );
-        if (file != null) {
-          _isLocallyAvailable = true;
-          if (mounted) {
-            setState(() {});
-          }
-        }
-      });
-    }
-    _progressHandler?.stream.listen((PMProgressState s) {
+    final handler = PMProgressHandler();
+    safeSetState(() {
+      _progressHandler = handler;
+    });
+    widget.asset
+        .loadFile(
+      isOrigin: widget.isOriginal,
+      withSubtype: true,
+      progressHandler: handler,
+    )
+        .then((file) {
+      if (file != null) {
+        _isLocallyAvailable = true;
+      }
+    }).catchError((e, s) {
+      _hasError = true;
+    }).whenComplete(() {
+      safeSetState(() {});
+    });
+    handler.stream.listen((PMProgressState s) {
       assert(() {
-        dev.log('Handling progress: $s.');
+        dev.log('Handling progress for asset: $s.', name: widget.asset.id);
         return true;
       }());
       if (s.state == PMRequestState.success) {
         _isLocallyAvailable = true;
-        if (mounted) {
-          setState(() {});
-        }
+        safeSetState(() {});
       }
     });
+  }
+
+  Widget _buildErrorIndicator(BuildContext context) {
+    return Center(
+      child: Icon(
+        Icons.warning_amber_rounded,
+        color: context.iconTheme.color?.withOpacity(.4),
+        size: 28,
+      ),
+    );
   }
 
   Widget _buildIndicator(BuildContext context) {
@@ -106,8 +123,8 @@ class _LocallyAvailableBuilderState extends State<LocallyAvailableBuilder> {
           children: [
             Icon(
               state == PMRequestState.failed
-                  ? Icons.cloud_off
-                  : Icons.cloud_queue,
+                  ? Icons.cloud_off_rounded
+                  : Icons.cloud_download_outlined,
               color: context.iconTheme.color?.withOpacity(.4),
               size: 28,
             ),
@@ -129,6 +146,12 @@ class _LocallyAvailableBuilderState extends State<LocallyAvailableBuilder> {
   Widget build(BuildContext context) {
     if (_isLocallyAvailable) {
       return widget.builder(context, widget.asset);
+    }
+    if (_hasError) {
+      return _buildErrorIndicator(context);
+    }
+    if (_progressHandler == null) {
+      return const SizedBox.shrink();
     }
     return Center(child: FittedBox(child: _buildIndicator(context)));
   }
