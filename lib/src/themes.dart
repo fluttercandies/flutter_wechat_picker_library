@@ -55,8 +55,11 @@ ThemeData buildTheme(Color? themeColor, {bool light = false}) {
       buttonTheme: ButtonThemeData(buttonColor: themeColor),
       iconTheme: IconThemeData(color: Colors.grey[900]),
       checkboxTheme: CheckboxThemeData(
+        // ignore: deprecated_member_use
         checkColor: MaterialStateProperty.all(Colors.black),
+        // ignore: deprecated_member_use
         fillColor: MaterialStateProperty.resolveWith((states) {
+          // ignore: deprecated_member_use
           if (states.contains(MaterialState.selected)) {
             return themeColor;
           }
@@ -67,6 +70,7 @@ ThemeData buildTheme(Color? themeColor, {bool light = false}) {
       colorScheme: ColorScheme(
         primary: Colors.grey[50]!,
         secondary: themeColor,
+        // ignore: deprecated_member_use
         background: Colors.grey[50]!,
         surface: Colors.grey[50]!,
         brightness: Brightness.light,
@@ -74,6 +78,7 @@ ThemeData buildTheme(Color? themeColor, {bool light = false}) {
         onPrimary: Colors.white,
         onSecondary: Colors.grey[100]!,
         onSurface: Colors.black,
+        // ignore: deprecated_member_use
         onBackground: Colors.black,
         onError: Colors.white,
       ),
@@ -108,8 +113,11 @@ ThemeData buildTheme(Color? themeColor, {bool light = false}) {
     buttonTheme: ButtonThemeData(buttonColor: themeColor),
     iconTheme: const IconThemeData(color: Colors.white),
     checkboxTheme: CheckboxThemeData(
+      // ignore: deprecated_member_use
       checkColor: MaterialStateProperty.all(Colors.white),
+      // ignore: deprecated_member_use
       fillColor: MaterialStateProperty.resolveWith((states) {
+        // ignore: deprecated_member_use
         if (states.contains(MaterialState.selected)) {
           return themeColor;
         }
@@ -120,6 +128,7 @@ ThemeData buildTheme(Color? themeColor, {bool light = false}) {
     colorScheme: ColorScheme(
       primary: Colors.grey[900]!,
       secondary: themeColor,
+      // ignore: deprecated_member_use
       background: Colors.grey[900]!,
       surface: Colors.grey[900]!,
       brightness: Brightness.dark,
@@ -127,6 +136,7 @@ ThemeData buildTheme(Color? themeColor, {bool light = false}) {
       onPrimary: Colors.black,
       onSecondary: Colors.grey[850]!,
       onSurface: Colors.white,
+      // ignore: deprecated_member_use
       onBackground: Colors.white,
       onError: Colors.black,
     ),
