@@ -24,6 +24,8 @@ final class Gap extends StatelessWidget {
 
   final double? _width;
   final double? _height;
+
+  /// The color which fills into the gap.
   final Color? color;
 
   @override
@@ -56,6 +58,8 @@ class SliverGap extends StatelessWidget {
 
   final double? _width;
   final double? _height;
+
+  /// The color which fills into the gap.
   final Color? color;
 
   @override

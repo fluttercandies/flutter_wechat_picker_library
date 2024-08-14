@@ -6,6 +6,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+/// Common extensions for the [BuildContext].
 extension BuildContextExtension on BuildContext {
   /// [Theme.of].
   ThemeData get theme => Theme.of(this);
@@ -26,6 +27,7 @@ extension BuildContextExtension on BuildContext {
   double get bottomInsets => MediaQuery.viewInsetsOf(this).bottom;
 }
 
+/// Common extensions for the [Brightness].
 extension BrightnessExtension on Brightness {
   /// [Brightness.dark].
   bool get isDark => this == Brightness.dark;
@@ -38,11 +40,13 @@ extension BrightnessExtension on Brightness {
       this == Brightness.light ? Brightness.dark : Brightness.light;
 }
 
+/// Common extensions for the [Color].
 extension ColorExtension on Color {
   /// Determine the transparent color by 0 alpha.
   bool get isTransparent => alpha == 0x00;
 }
 
+/// Common extensions for the [ThemeData].
 extension ThemeDataExtension on ThemeData {
   /// The effective brightness from the
   /// [SystemUiOverlayStyle.statusBarBrightness]
@@ -51,6 +55,7 @@ extension ThemeDataExtension on ThemeData {
       appBarTheme.systemOverlayStyle?.statusBarBrightness ?? brightness;
 }
 
+/// Common extensions for the [State].
 extension SafeSetStateExtension on State {
   /// [setState] after the [fn] is done while the [State] is still [mounted]
   /// and [State.context] is safe to mark needs build.
