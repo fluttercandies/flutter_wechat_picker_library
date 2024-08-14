@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.2
+
+* Better caught exceptions.
+
 ## 1.0.1
 
 * Improve `LocallyAvailableBuilder` with more states display.
