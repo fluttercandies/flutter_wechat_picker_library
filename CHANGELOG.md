@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.3
+
+* Make `LocallyAvailableBuilder.isOriginal` as a required parameter.
+
 ## 1.0.2
 
 * Better caught exceptions.

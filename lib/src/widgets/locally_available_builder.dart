@@ -13,7 +13,7 @@ final class LocallyAvailableBuilder extends StatefulWidget {
   const LocallyAvailableBuilder({
     super.key,
     required this.asset,
-    this.isOriginal = true,
+    required this.isOriginal,
     required this.builder,
     this.progressBuilder,
   });
