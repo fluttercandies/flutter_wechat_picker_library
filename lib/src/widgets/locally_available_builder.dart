@@ -3,10 +3,31 @@
 // in the LICENSE file.
 
 import 'dart:developer' as dev;
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:wechat_picker_library/wechat_picker_library.dart';
+
+final _defaultThumbnailOption = () {
+  const size = ThumbnailSize.square(200);
+  if (Platform.isIOS || Platform.isMacOS) {
+    return ThumbnailOption.ios(
+      size: size,
+      format: ThumbnailFormat.jpeg,
+      quality: 95,
+      deliveryMode: DeliveryMode.opportunistic,
+      resizeMode: ResizeMode.fast,
+      resizeContentMode: ResizeContentMode.def,
+    );
+  }
+  return const ThumbnailOption(
+    size: size,
+    format: ThumbnailFormat.jpeg,
+    quality: 95,
+    frame: 0,
+  );
+}();
 
 /// An asset builder that builds according to the locally available state.
 final class LocallyAvailableBuilder extends StatefulWidget {
@@ -15,11 +36,16 @@ final class LocallyAvailableBuilder extends StatefulWidget {
     required this.asset,
     required this.isOriginal,
     required this.builder,
+    this.withSubtype = true,
+    this.thumbnailOption,
     this.progressBuilder,
   });
 
   final AssetEntity asset;
   final bool isOriginal;
+  final bool withSubtype;
+  final ThumbnailOption? thumbnailOption;
+
   final Widget Function(BuildContext context, AssetEntity asset) builder;
   final Widget Function(
     BuildContext context,
@@ -84,14 +110,21 @@ class _LocallyAvailableBuilderState extends State<LocallyAvailableBuilder> {
     safeSetState(() {
       _progressHandler = handler;
     });
-    widget.asset
-        .loadFile(
-      isOrigin: widget.isOriginal,
-      withSubtype: true,
-      progressHandler: handler,
-    )
-        .then((file) {
-      if (file != null) {
+    Future<Object?>(() async {
+      if (widget.isOriginal) {
+        return widget.asset.loadFile(
+          isOrigin: true,
+          withSubtype: widget.withSubtype,
+          progressHandler: handler,
+        );
+      } else {
+        return widget.asset.thumbnailDataWithOption(
+          widget.thumbnailOption ?? _defaultThumbnailOption,
+          progressHandler: handler,
+        );
+      }
+    }).then((result) {
+      if (result != null) {
         _isLocallyAvailable = true;
       }
     }).catchError((e, s) {
