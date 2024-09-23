@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.4
+
+* `LocallyAvailableBuilder` can now build thumbnails and with more fields to customize.
+
 ## 1.0.3
 
 * Make `LocallyAvailableBuilder.isOriginal` as a required parameter.
