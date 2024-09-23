@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.5
+
+* Improve code usages consistency with assets.
+
 ## 1.0.4
 
 * `LocallyAvailableBuilder` can now build thumbnails and with more fields to customize.

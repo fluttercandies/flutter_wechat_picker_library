@@ -83,7 +83,7 @@ class _LocallyAvailableBuilderState extends State<LocallyAvailableBuilder> {
   void _markAndPresentError(Object exception, StackTrace stack) {
     _hasError = true;
     safeSetState(() {});
-    FlutterError.presentError(
+    FlutterError.reportError(
       FlutterErrorDetails(
         exception: exception,
         stack: stack,
@@ -96,6 +96,7 @@ class _LocallyAvailableBuilderState extends State<LocallyAvailableBuilder> {
     try {
       _isLocallyAvailable = await widget.asset.isLocallyAvailable(
         isOrigin: widget.isOriginal,
+        withSubtype: widget.withSubtype,
       );
     } catch (e, s) {
       _markAndPresentError(e, s);
