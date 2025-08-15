@@ -149,7 +149,7 @@ class _LocallyAvailableBuilderState extends State<LocallyAvailableBuilder> {
     return Center(
       child: Icon(
         Icons.warning_amber_rounded,
-        color: context.iconTheme.color?.withOpacity(.4),
+        color: context.iconTheme.color?.withAlpha(102), // 0.4
         size: 28,
       ),
     );
@@ -171,7 +171,7 @@ class _LocallyAvailableBuilderState extends State<LocallyAvailableBuilder> {
               state == PMRequestState.failed
                   ? Icons.cloud_off_rounded
                   : Icons.cloud_download_outlined,
-              color: context.iconTheme.color?.withOpacity(.4),
+              color: context.iconTheme.color?.withAlpha(102), // 0.4
               size: 28,
             ),
             if (state != PMRequestState.success &&
@@ -179,7 +179,8 @@ class _LocallyAvailableBuilderState extends State<LocallyAvailableBuilder> {
               ScaleText(
                 '  iCloud ${((progress ?? 0) * 100).toInt()}%',
                 style: TextStyle(
-                  color: context.textTheme.bodyMedium?.color?.withOpacity(.4),
+                  color: context.textTheme.bodyMedium?.color
+                      ?.withAlpha(102), // 0.4
                 ),
               ),
           ],

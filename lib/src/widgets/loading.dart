@@ -100,7 +100,7 @@ final class _LoadingIndicatorPainter extends CustomPainter {
       ..strokeCap = StrokeCap.round
       ..strokeWidth = 4
       ..shader = SweepGradient(
-        colors: <Color>[color.withOpacity(0), color],
+        colors: <Color>[color.withAlpha(0), color],
       ).createShader(rect);
     canvas.drawArc(rect, 0.1, math.pi * 2 * 0.9, false, paint);
   }
