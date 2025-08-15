@@ -2,15 +2,15 @@
 
 ## 1.0.6
 
-* Improve themes.
+* Improve themes based on Flutter 3.35 breaking changes (and still supports older versions).
 
 ## 1.0.5
 
-* Improve code usages consistency with assets.
+* Improve code usage consistency with assets.
 
 ## 1.0.4
 
-* `LocallyAvailableBuilder` can now build thumbnails and with more fields to customize.
+* `LocallyAvailableBuilder` can now build thumbnails with more fields to customize.
 
 ## 1.0.3
 
@@ -22,7 +22,7 @@
 
 ## 1.0.1
 
-* Improve `LocallyAvailableBuilder` with more states display.
+* Improve `LocallyAvailableBuilder` with more state display.
 * Update descriptions and comments.
 
 ## 1.0.0
