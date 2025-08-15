@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.0.7
+
+* Fix color extensions for older Flutter versions.
+
 ## 1.0.6
 
 * Improve themes based on Flutter 3.35 breaking changes (and still supports older versions).
